@@ -1,14 +1,7 @@
-# Every character on the keyboard has a number behind the scenes,
-# called its ASCII code (for example, "A" is 65, "a" is 97).
-# We shift that number by a secret amount ("key") to scramble the
-# text, and shift it back by the same amount to unscramble it.
-# The key comes from the master password, so only someone who
-# knows the master password can turn the scrambled text back into
-# the real password.
 
-lowest_code = 32     # ASCII code of the space character
-highest_code = 126   # ASCII code of the "~" character
-total_codes = highest_code - lowest_code + 1   # how many characters we shift between
+lowest_code = 32    
+highest_code = 126  
+total_codes = highest_code - lowest_code + 1  
 
 
 def make_key(master_password):

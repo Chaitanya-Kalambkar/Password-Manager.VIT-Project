@@ -52,7 +52,7 @@ password_manager/
 ├── README.md
 ├── statement.md
 └── docs/
-    └── design.md                # objectives, requirements, diagrams
+    └── design.md               # objectives, requirements, diagrams
 ```
 
 ## How to Install & Run

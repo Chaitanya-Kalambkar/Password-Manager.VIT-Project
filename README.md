@@ -93,6 +93,21 @@ If everything works, it prints `All tests passed!`. The tests cover:
 You can also test manually by running `main.py` and trying each of the 7
 menu options.
 
+## Screenshots
+
+1. <img width="600" height="92" alt="2026-09-20_15-51-46" src="https://github.com/user-attachments/assets/e71f9044-de43-4cbd-a42a-17e961ffefdc" />
+
+2. <img width="1556" height="572" alt="image" src="https://github.com/user-attachments/assets/0145f263-e9e7-43df-8de5-3bc851f23a46" />
+
+3. <img width="693" height="162" alt="Screenshot 2026-09-20 at 3 56 28 PM" src="https://github.com/user-attachments/assets/1df226aa-c463-4d80-b645-ff80291a18d0" />
+
+4. <img width="1494" height="212" alt="image" src="https://github.com/user-attachments/assets/086ea58d-2e29-4154-9189-abc566ef829b" />
+
+5. <img width="894" height="156" alt="image" src="https://github.com/user-attachments/assets/3ca61b77-5642-47a0-86aa-12c7f7a03847" />
+
+6. <img width="1360" height="424" alt="image" src="https://github.com/user-attachments/assets/3cae2ff4-9dc1-4154-ac27-c4b4d8edd4c6" />
+
+
 ## Notes
 
 - The encryption used here is a basic, educational shift cipher and hence it is

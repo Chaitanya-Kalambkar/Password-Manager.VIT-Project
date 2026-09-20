@@ -2,15 +2,11 @@
 
 ## Problem Statement
 
-People reuse the same weak passwords across many websites because coming up
-with — and remembering — a strong, unique password for every site is
-tedious. This leads to accounts being easier to compromise. A simple tool
-that can generate strong passwords on demand, and store them securely so
-they don't need to be memorized, addresses this problem directly.
+Personally I've seen my own mother tediously trying to come up with strong passwords for all her accounts and apps, and then writing them in old diaries for later use, hence people reuse the same weak passwords across many websites because coming up with, and remembering a strong, unique password for every site is tedious. This leads to accounts being easier to hack into as passwords are easy to guess. So a simple tool that can generate strong passwords, and store them and do encryption/decryption all securely inside one's computer addresses this problem directly.
 
 ## Scope of the Project
 
-This project is a command-line Python application that:
+This project is a Python application that:
 
 - Generates random passwords made up of letters, numbers and symbols
 - Encrypts passwords before saving them to disk, and decrypts them on
@@ -25,10 +21,10 @@ single-user, local command-line tool.
 
 ## Target Users
 
-- A single individual who wants a lightweight way to generate strong
+- A single individual who wants a easy to use and seamless way to generate strong
   passwords and keep track of which password belongs to which
   website/account combination, without relying on a third-party password
-  manager service.
+  manager service. For certain people this may be better than google's password manager because that can get leaked in a data breach in the main server of google, but this      tool runs locally in one's computer.  
 
 ## High-Level Features
 

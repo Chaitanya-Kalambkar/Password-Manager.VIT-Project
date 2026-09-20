@@ -1,14 +1,13 @@
 # Password Manager
 
-A simple command-line Password Manager written in pure Python, built for the
-VITyarthi "Build Your Own Project" submission.
+A simple Password Manager written in pure Python.
 
 ## Overview
 
 This project combines three things into one tool:
 
 1. A **strong password generator** that builds random passwords from a mix
-   of letters, numbers and symbols.
+   of letters, numbers and symbols, which the user inputs.
 2. An **encrypted storage system** that saves passwords for different
    website/account combinations using a basic Caesar-style shift cipher, so
    nothing is stored as plain text.
@@ -19,13 +18,13 @@ This project combines three things into one tool:
 ## Features
 
 - Generate a random password with a chosen number of letters, symbols and
-  numbers
+  numbers, which the user gets to input. 
 - A simple strength label (Weak / Okay / Strong) shown with each generated
-  password
-- Store a password for a website **and account/username**, either typed in
-  or freshly generated - the same website can have several saved accounts
+  password to justify the complexity of the generated password.
+- Using dictionaries to store passwords in a key-value pair (and account/username)
+  The same website can have several saved accounts as well. 
 - Confirmation prompt before overwriting an existing saved website+account
-  password
+  password.
 - Retrieve a stored password for a website/account (decrypted on the spot)
 - Update or delete a saved password for a specific account
 - View a list of every website + account you have saved passwords for
@@ -36,7 +35,7 @@ This project combines three things into one tool:
 
 ## Technologies / Tools Used
 
-- Python 3 (standard library only — just `random`)
+- Python 3 (standard library only. just `random` is imported to be used in the password generation)
 - No external packages or `pip install` required
 
 ## Project Structure
@@ -69,7 +68,7 @@ python main.py
 
 4. Follow the on-screen menu.
 
-No installation steps beyond having Python itself — there are no external
+No installation steps beyond having Python itself, as there are no external
 dependencies.
 
 ## Testing
@@ -96,8 +95,9 @@ menu options.
 
 ## Notes
 
-- The encryption used here is a basic, educational shift cipher — it is
-  meant to demonstrate the concept of encryption/decryption for this
+- The encryption used here is a basic, educational shift cipher and hence it is
+  not mainstream secure and only meant to demonstrate the concept of encryption/decryption for this
   project, not to provide real-world-grade security.
-- `passwords_store.txt` is created next to `main.py` the first time you run
-  it, and picks up right where you left off on later runs.
+- `passwords_store.txt` is created the first time you run
+  the `main.py`, and picks up right where you left off on later runs.
+- The same master password is required to be entered every time when the `main.py` is ran, otherwise the decryption will not work for the intended stored passwords.  

@@ -43,7 +43,7 @@ This project combines three things into one tool:
 
 ```
 password_manager/
-├── main.py                    # menu loop - run this file
+├── main.py                     # menu loop - run this file
 ├── generator.py                # password generation
 ├── encryption.py               # encrypt / decrypt logic
 ├── storage.py                  # save / load passwords to disk

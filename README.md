@@ -35,7 +35,7 @@ This project combines three things into one tool:
 
 ## Technologies / Tools Used
 
-- Python 3 (standard library only. just `random` is imported to be used in the password generation)
+- Python 3 (standard library only, just `random` is imported to be used in the password generation)
 - No external packages or `pip install` required
 
 ## Project Structure

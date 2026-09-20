@@ -9,10 +9,9 @@ target users and high-level features.
 
 - Provide a way to generate strong, random passwords without relying on an
   external service or library
-- Demonstrate basic encryption/decryption concepts by encrypting stored
+- Demonstrate and use basic encryption/decryption concepts by encrypting stored
   passwords with a key derived from a user-chosen master password
-- Store passwords persistently (across program runs) using simple file I/O
-  and a nested dictionary (website -> account/username -> password)
+- Store passwords using simple file I/O and a nested dictionary (website -> account/username -> password)
 - Support multiple accounts under the same website (e.g. more than one
   Gmail address under "google")
 - Provide a clear, validated, menu-driven interface connecting all of the

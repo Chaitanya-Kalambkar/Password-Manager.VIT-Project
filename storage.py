@@ -1,18 +1,5 @@
-# The passwords dictionary is TWO levels deep:
-#   passwords = {
-#       'google': {
-#           'someone@gmail.com': '<encrypted password>',
-#           'other@gmail.com':   '<encrypted password>',
-#       },
-#       'instagram': {
-#           'someone': '<encrypted password>',
-#       },
-#   }
-# This lets the same website have more than one saved account.
-
 data_file = 'passwords_store.txt'
-delimiter = ':::'   # separates website / username / encrypted password on each line
-
+delimiter = ':::'   
 
 def load_passwords():
     passwords = {}
@@ -27,20 +14,19 @@ def load_passwords():
                     username = parts[1]
                     encrypted_password = parts[2]
                 elif len(parts) == 2:
-                    # Old format from before accounts/usernames were added.
-                    # Keep the password, just file it under 'default'.
+                   
                     website = parts[0]
                     username = 'default'
                     encrypted_password = parts[1]
                 else:
-                    continue  # not a line we understand, skip it
+                    continue  
 
                 if website not in passwords:
                     passwords[website] = {}
                 passwords[website][username] = encrypted_password
         file.close()
     except FileNotFoundError:
-        pass  # no saved passwords yet, start with an empty dictionary
+        pass  
     return passwords
 
 

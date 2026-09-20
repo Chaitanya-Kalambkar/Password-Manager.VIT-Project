@@ -9,9 +9,10 @@ target users and high-level features.
 
 - Provide a way to generate strong, random passwords without relying on an
   external service or library
-- Demonstrate and use basic encryption/decryption concepts by encrypting stored
+- Demonstrate basic encryption/decryption concepts by encrypting stored
   passwords with a key derived from a user-chosen master password
-- Store passwords using simple file I/O and a nested dictionary (website -> account/username -> password)
+- Store passwords persistently (across program runs) using simple file I/O
+  and a nested dictionary (website -> account/username -> password)
 - Support multiple accounts under the same website (e.g. more than one
   Gmail address under "google")
 - Provide a clear, validated, menu-driven interface connecting all of the
@@ -44,31 +45,33 @@ target users and high-level features.
 ## 5. System Architecture Diagram
 
 ```mermaid
-flowchart TB
-    User(["User"]) --> Main["main.py (menu loop)"]
-    Main --> Generator["generator.py"]
-    Main --> Encryption["encryption.py"]
-    Main --> Storage["storage.py"]
-    Main --> Helpers["helpers.py"]
+flowchart TD
+    User(["User"]) --> Main["main.py<br/>menu loop"]
+    Main --> Generator["generator.py<br/>generate passwords"]
+    Main --> Encryption["encryption.py<br/>encrypt / decrypt"]
+    Main --> Helpers["helpers.py<br/>input validation"]
+    Main --> Storage["storage.py<br/>save / load"]
     Storage --> DataFile[("passwords_store.txt")]
-    Encryption --> Storage
 ```
+
+`main.py` is the only module that talks to the others - each of the four
+support modules does one job and doesn't call the others directly.
 
 ## 6. Process Flow / Workflow Diagram
 
 ```mermaid
 flowchart TD
-    Start(["Start"]) --> MasterPW["Enter master password"]
-    MasterPW --> Key["Derive encryption key"]
-    Key --> Load["Load saved passwords from disk"]
-    Load --> Menu{"Show menu:\n1 Generate 2 Store 3 Retrieve\n4 View 5 Delete 6 Update 7 Exit"}
-    Menu -- "1" --> Gen["Enter website + account, generate & save password"]
-    Menu -- "2" --> Store["Enter website + account, encrypt & save password"]
-    Menu -- "3" --> Retrieve["Enter website, pick account, decrypt & show password"]
-    Menu -- "4" --> View["List saved website + account pairs"]
-    Menu -- "5" --> Delete["Pick website + account, delete saved password"]
-    Menu -- "6" --> Update["Pick website + account, update saved password"]
-    Menu -- "7" --> Exit(["Exit"])
+    Start(["Start"]) --> Setup["Enter master password<br/>Derive key<br/>Load saved passwords"]
+    Setup --> Menu{"Choose an option (1-7)"}
+
+    Menu -- "1 Generate" --> Gen["Ask website + account<br/>Generate & save password"]
+    Menu -- "2 Store" --> Store["Ask website + account<br/>Type or generate, then save"]
+    Menu -- "3 Retrieve" --> Retrieve["Ask website + account<br/>Decrypt & show password"]
+    Menu -- "4 View" --> View["List saved websites & accounts"]
+    Menu -- "5 Delete" --> Delete["Ask website + account<br/>Confirm, then delete"]
+    Menu -- "6 Update" --> Update["Ask website + account<br/>Type or generate, then save"]
+    Menu -- "7 Exit" --> End(["End"])
+
     Gen --> Menu
     Store --> Menu
     Retrieve --> Menu
@@ -92,36 +95,34 @@ flowchart LR
     U --> UC6(["Update Password"])
 ```
 
-### 7.2 Class / Component Diagram
+### 7.2 Component Diagram
+
+This project has no classes - it's plain functions grouped into modules -
+so a component diagram (showing modules and what each one exposes) fits
+better than a class diagram:
 
 ```mermaid
-classDiagram
-    class generator {
-        +generate_password(nr_letters, nr_symbols, nr_numbers) str
-        +strength_label(nr_letters, nr_symbols, nr_numbers) str
-    }
-    class encryption {
-        +make_key(master_password) int
-        +encrypt_password(password, key) str
-        +decrypt_password(encrypted_password, key) str
-    }
-    class storage {
-        +load_passwords() dict
-        +save_passwords(passwords) void
-    }
-    class helpers {
-        +ask_for_number(prompt) int
-        +ask_password_settings() tuple
-        +ask_yes_no(prompt) bool
-        +show_accounts(website, passwords) void
-    }
-    class main {
-        +menu loop
-    }
-    main --> generator
-    main --> encryption
-    main --> storage
-    main --> helpers
+flowchart LR
+    subgraph main.py
+        M["menu loop"]
+    end
+    subgraph generator.py
+        G["generate_password()<br/>strength_label()"]
+    end
+    subgraph encryption.py
+        E["make_key()<br/>encrypt_password()<br/>decrypt_password()"]
+    end
+    subgraph storage.py
+        S["load_passwords()<br/>save_passwords()"]
+    end
+    subgraph helpers.py
+        H["ask_for_number()<br/>ask_password_settings()<br/>ask_yes_no()<br/>show_accounts()"]
+    end
+
+    M --> G
+    M --> E
+    M --> S
+    M --> H
 ```
 
 ### 7.3 Sequence Diagram (Store a Password)
@@ -130,33 +131,30 @@ classDiagram
 sequenceDiagram
     participant U as User
     participant M as main.py
-    participant H as helpers.py
     participant G as generator.py
     participant E as encryption.py
     participant S as storage.py
 
     U->>M: Choose "2. Store a password"
-    M->>U: Ask "Which website?"
-    U-->>M: website
-    M->>U: Ask "Which account/username?"
-    U-->>M: username
-    alt website + username already saved
-        M->>H: ask_yes_no("Overwrite?")
-        H-->>M: yes / no
+    M->>U: Ask for website & account
+    U-->>M: website, username
+
+    alt already saved for that website + account
+        M->>U: Ask "Overwrite?"
+        U-->>M: yes / no
     end
-    M->>H: ask_yes_no("Generate new password?")
-    alt user chooses to generate
-        M->>H: ask_password_settings()
-        H-->>M: nr_letters, nr_symbols, nr_numbers
+
+    alt user wants a generated password
         M->>G: generate_password(...)
         G-->>M: new_password
     else user types their own
         U-->>M: new_password
     end
+
     M->>E: encrypt_password(new_password, key)
     E-->>M: encrypted_password
     M->>S: save_passwords(passwords)
-    S-->>M: written to passwords_store.txt
+    S-->>M: saved to passwords_store.txt
 ```
 
 ## 8. Storage / Schema Design

@@ -6,37 +6,36 @@ A simple Password Manager written in pure Python.
 
 This project combines three things into one tool:
 
-1. A **strong password generator** that builds random passwords from a mix
+1. A **strong password generator** that outputs randomly generated passwords from a mix
    of letters, numbers and symbols, which the user inputs.
 2. An **encrypted storage system** that saves passwords for different
    website/account combinations using a basic Caesar-style shift cipher, so
    nothing is stored as plain text.
 3. A **menu-driven interface** that lets the user generate, store, retrieve,
-   update, delete, and list passwords for different websites and accounts
+   update, delete, and list passwords for different websites and accounts on their command.
    (e.g. more than one Gmail account under "google").
 
 ## Features
 
 - Generate a random password with a chosen number of letters, symbols and
   numbers, which the user gets to input. 
-- A simple strength label (Weak / Okay / Strong) shown with each generated
-  password to justify the complexity of the generated password.
-- Using dictionaries to store passwords in a key-value pair (and account/username)
-  The same website can have several saved accounts as well. 
-- Confirmation prompt before overwriting an existing saved website+account
-  password.
-- Retrieve a stored password for a website/account (decrypted on the spot)
-- Update or delete a saved password for a specific account
+- A simple strength label check function (Weak / Okay / Strong) which shows with each generated
+  password, its respected strength based on its length, to justify the complexity of the generated password.
+- Using nested dictionaries to not only store passwords in a key-value pair (and account/username),but also allow virtually unlimited unique password for the same websites.
+- Confirmation prompt will be printed, before overwriting an existing saved website+account
+  password, to confirm if the user wanted to do so.
+- Retrieve a stored password for a website/account, which will be decrypted on the spot.
+- Update or delete a saved password for a specific account and website. 
 - View a list of every website + account you have saved passwords for
 - All passwords are encrypted before being written to disk, using a key
   derived from your own master password
-- Input validation: keeps re-asking for numbers until a valid whole number
-  is entered, and won't generate an empty password
+- Input validation: where the code keeps re-asking for numbers until a valid whole number
+  is entered which will break the loop, and won't generate an empty password. 
 
 ## Technologies / Tools Used
 
 - Python 3 (standard library only, just `random` is imported to be used in the password generation)
-- No external packages or `pip install` required
+- No external packages or `pip install` is used, hence no need for such installations.
 
 ## Project Structure
 
@@ -74,7 +73,8 @@ dependencies.
 ## Testing
 
 Automated tests are included in `test_password_manager.py`. They use plain
-`assert` statements (no testing library required). To run them:
+`assert` statements hence no testing library is required. 
+To run them:
 
 ```
 python test_password_manager.py
@@ -82,15 +82,15 @@ python test_password_manager.py
 
 If everything works, it prints `All tests passed!`. The tests cover:
 
-- Generated passwords have the correct length and only use allowed
+- Generated passwords having the correct length and only use allowed
   characters
 - The strength label logic
-- Encrypting then decrypting returns the original password
+- Encrypting then decrypting returns the original password or not 
 - The same master password always produces the same encryption key
 - Saving and loading passwords from disk works correctly, including
   multiple accounts under the same website
 
-You can also test manually by running `main.py` and trying each of the 7
+Alternatively you can also test the code manually by running `main.py` and trying each of the 7
 menu options.
 
 ## Screenshots
@@ -114,7 +114,7 @@ menu options.
 ## Notes
 
 - The encryption used here is a basic, educational shift cipher and hence it is
-  not mainstream secure and only meant to demonstrate the concept of encryption/decryption for this
+  not meant to be mainstream secure and is only to demonstrate the concept of encryption/decryption for this
   project, not to provide real-world-grade security.
 - `passwords_store.txt` is created the first time you run
   the `main.py`, and picks up right where you left off on later runs.

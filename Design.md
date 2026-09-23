@@ -7,16 +7,12 @@ target users and high-level features.
 
 ## 2. Objectives
 
-- Provide a way to generate strong, random passwords without relying on an
-  external service or library
-- Demonstrate basic encryption/decryption concepts by encrypting stored
-  passwords with a key derived from a user-chosen master password
-- Store passwords persistently (across program runs) using simple file I/O
-  and a nested dictionary (website -> account/username -> password)
-- Support multiple accounts under the same website (e.g. more than one
-  Gmail address under "google")
-- Provide a clear, validated, menu-driven interface connecting all of the
-  above into one program
+- Provide a way to generate strong, and completely randomly generated passwords without relying on an
+  external service or library like 'pip'
+- Demonstrating basic encryption/decryption concepts using ASCII encryption, encrypting the stored
+  passwords with a key given by the user-chosen master password
+- Stores passwords using simple file I/O and a nested dictionary (website -> account/username -> password). Hence the code can support multiple accounts under the same website (e.g. more than one Gmail address under "google")
+- Provides a clear, validated, menu interface connecting all of the above statements into one program
 
 ## 3. Functional Requirements
 
@@ -24,22 +20,22 @@ target users and high-level features.
 |----|-------------|
 | FR1 | The system shall generate a password from a user-specified number of letters, symbols, and numbers. |
 | FR2 | The system shall reject a password request where the total requested length is 0. |
-| FR3 | The system shall allow the user to store a password (typed or generated) against a website name **and** an account/username. |
-| FR4 | The system shall encrypt a password before writing it to disk, and decrypt it only when it is retrieved. |
+| FR3 | The system shall allow the user to store a password against a website name **and** an account/username. |
+| FR4 | The system shall encrypt a password before writing it to a .txt file, and decrypt it only when it is retrieved by the user. |
 | FR5 | The system shall ask for confirmation before overwriting an existing saved website+account password. |
 | FR6 | The system shall allow the user to retrieve, update, delete, and list stored website/account entries. |
-| FR7 | The system shall support more than one account/username under the same website. |
+| FR7 | The system shall support more than one account/username under the same website using nested dictionaries. |
 | FR8 | The system shall persist stored passwords between separate runs of the program. |
-| FR9 | The system shall validate numeric and text input, and re-prompt on invalid input rather than crashing. |
+| FR9 | The system shall validate and run numeric and text input, and re-prompt the code on invalid input, rather than crashing completely. |
 
 ## 4. Non-Functional Requirements
 
 | ID | Category | Requirement |
 |----|----------|-------------|
-| NFR1 | Security | Passwords are never written to disk in plain text; they are always encrypted first, using a key derived from the master password. |
-| NFR2 | Usability | The program uses a numbered menu and plain-language prompts so it can be used without reading documentation. |
-| NFR3 | Reliability | Invalid input (non-numeric answers) is caught and re-prompted instead of crashing the program. |
-| NFR4 | Maintainability | Functionality is split into single-purpose modules (`generator.py`, `encryption.py`, `storage.py`, `helpers.py`) so each part can be changed independently. |
+| NFR1 | Security | Passwords will never be written to the .txt file as is, in plain text; rather they are always encrypted first, using a key derived from the master password and then stored further. |
+| NFR2 | Usability | The program uses a numbered menu interface which will be easy to understand and will be in plain-language prompts so it can be used without reading documentation. |
+| NFR3 | Reliability | Invalid input such as non-numeric answers is caught and re-prompted instead of crashing the program. |
+| NFR4 | Maintainability | Functionality is split into single-purpose modules (`generator.py`, `encryption.py`, `storage.py`, `helpers.py`) so each part can be changed independently, which will increase productivity and improve organization. |
 | NFR5 | Scalability | The nested dictionary structure (website -> account -> password) allows an unlimited number of accounts per website without any change to the storage format. |
 
 ## 5. System Architecture Diagram
@@ -54,8 +50,8 @@ flowchart TD
     Storage --> DataFile[("passwords_store.txt")]
 ```
 
-`main.py` is the only module that talks to the others - each of the four
-support modules does one job and doesn't call the others directly.
+`main.py` is the only module that talks to the other four
+support modules using the import function and does the main job.
 
 ## 6. Process Flow / Workflow Diagram
 
@@ -197,7 +193,7 @@ passwords = {
 }
 ```
 
-**On-disk format (`passwords_store.txt`)** — one entry per line, with the
+**On-disk format (`passwords_store.txt`)**, one entry per line, with the
 website, account/username, and encrypted password separated by a `:::`
 delimiter:
 
@@ -211,7 +207,7 @@ netflix:::netflixuser:::Qz1@92$k
 |-------|------|-------|
 | website | string | stored in lowercase, used as the outer dictionary key |
 | account/username | string | the inner dictionary key; lets one website hold several accounts |
-| encrypted_password | string | output of `encrypt_password()`; only readable with the correct master password |
+| encrypted_password | string | output of `encrypt_password()`; only readable with the correct master password, without it encryption will be jumbled and output password will also be jumbled  |
 
 For backward compatibility, `load_passwords()` can also read older
 two-part lines (`website:::encrypted_password`, from before accounts were
